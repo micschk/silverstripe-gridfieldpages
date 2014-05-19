@@ -1,0 +1,20 @@
+{
+    "name": "micschk/silverstripe-gridfieldpages",
+    "description": "Base Page & Holder classes for managing SiteTree items in a Gridfield instead of via SiteTree",
+    "type": "silverstripe-module",
+    "keywords": ["silverstripe", "excludechildren", "sitetree", "gridfield"],
+    "authors": [
+    {
+        "name": "micschk"
+    }],
+    "require": {
+        "silverstripe/framework": "~3.0",
+		"silverstripe/cms": "~3.0",
+		"micschk/silverstripe-excludechildren": "*",
+		"micschk/silverstripe-gridfieldsitetreebuttons": "*"
+    },
+	"extra": {
+		"installer-name": "gridfieldpages"
+	}
+    
+}
