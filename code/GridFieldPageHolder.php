@@ -2,21 +2,12 @@
  
 class GridFieldPageHolder extends Page {
 
-	//public static $icon = 'mysite/images/folder_open';	
-
-    static $db = array(
-		'ItemsPerPage' => 'Int',
-    );
+    private static $allowed_children = array('*GridFieldPage');
+	private static $default_child = "GridFieldPage";
+	private static $add_default_gridfield = true;
 	
-    static $has_one = array(
-    );
-
-    static $allowed_children = array('*GridFieldPage');
-	static $default_child = "GridFieldPage";
-	static $add_default_gridfield = true;
-	
-	static $extensions = array("ExcludeChildren");
-	static $excluded_children = array('GridFieldPage');
+//	static $extensions = array("ExcludeChildren");
+//	static $excluded_children = array('GridFieldPage');
 	
 	public static function setAddDefaultGridField(Boolean $val){
 		self::$add_default_gridfield = $val;
@@ -27,8 +18,8 @@ class GridFieldPageHolder extends Page {
 		
 		// GridFieldPage
 		$fields->addFieldToTab('Root.Subpages', new HeaderField('GridfieldPages', 'Subpages of this page'));
-		$fields->addFieldToTab('Root.Subpages', 
-				new NumericField('ItemsPerPage', 'Paginate subpages per (0 for no pagination)'));
+//		$fields->addFieldToTab('Root.Subpages', 
+//				new NumericField('ItemsPerPage', 'Paginate subpages per (0 for no pagination)'));
 		
 		if( self::$add_default_gridfield ){
 			$gridFieldConfig = GridFieldConfig::create()->addComponents(
@@ -38,7 +29,8 @@ class GridFieldPageHolder extends Page {
 				new GridFieldFilterHeader(),
 				$dataColumns = new GridFieldDataColumns(),
 				new GridFieldPaginator(20),
-				new GridFieldEditSiteTreeItemButton()
+				new GridFieldEditSiteTreeItemButton(),
+				new GridFieldOrderableRows() // default 'Sort' is equal to page sort field...
 			);
 			$dataColumns->setDisplayFields(array(
 				'Title' => 'Title',
@@ -64,27 +56,30 @@ class GridFieldPageHolder extends Page {
 		return $fields;
 	}
 	
-	public function SortedChildren(){ 
-		// $children will be a DataObjectSet 
-		$children = $this->Children();
-
-		if( !$children ) 
-		return null; // no children, nothing to work with
-
-		// optionally: sort on some other field, like Date (override from subclass)
-		//$children->sort('Date', 'DESC');
-		
-		// M: gridnews
-		if($this->ItemsPerPage && $this->ItemsPerPage > 0) {
-			$ctrlr = Controller::curr();
-			$children = new PaginatedList($children, $ctrlr->request);
-			$children->setPageLength($this->ItemsPerPage);
-		}
-		// M: END gridnews
-
-		// return sorted set 
-		return $children; 
-	}
+//	public function SortedChildren(){ 
+//		return $this->Children();
+//		
+//		//return $this->Children->sort('Date');
+////		// $children will be a DataObjectSet 
+////		$children = $this->Children();
+////
+////		if( !$children ) 
+////		return null; // no children, nothing to work with
+////
+////		// optionally: sort on some other field, like Date (override from subclass)
+////		//$children->sort('Date', 'DESC');
+////		
+////		// M: gridnews
+////		if($this->ItemsPerPage && $this->ItemsPerPage > 0) {
+////			$ctrlr = Controller::curr();
+////			$children = new PaginatedList($children, $ctrlr->request);
+////			$children->setPageLength($this->ItemsPerPage);
+////		}
+////		// M: END gridnews
+////
+////		// return sorted set 
+////		return $children; 
+//	}
 	
 	
 }

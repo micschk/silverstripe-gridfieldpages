@@ -1,0 +1,9 @@
+---
+Only:
+  classexists: 'ExcludeChildren'
+---
+GridFieldPageHolder:
+  extensions:
+    - 'ExcludeChildren'
+  excluded_children:
+    - 'GridFieldPage'

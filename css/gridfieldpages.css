@@ -1,0 +1,12 @@
+/* 
+    Document   : gridfieldpages
+    Created on : May 19, 2014, 5:25:14 PM
+    Author     : mic
+    Description:
+        Some basic styling of pages managed from GridFields appearing in SiteTree
+*/
+
+span.gridfieldpage-overlay:before { 
+	content: url('../images/icon-overlay.png'); 
+}
+
