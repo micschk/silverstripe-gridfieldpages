@@ -52,10 +52,13 @@ class GridFieldPageHolder extends Page {
 		return $fields;
 	}
 	
-	
+	// @TODO: A page still needs to be published for the sortorder to be updated, 
+	// we need some kind of warning/info to inform CMS users about this
 	public function SortedChildren(){
+		//return DataObject::get($this->defaultChild(), 'ParentID = '.$this->ID);
+		//return SiteTree::get()->filter('ParentID', $this->ID)->sort('Sort');
 		$pagetype = $this->defaultChild();
-		return $pagetype::get()->filter('ParentID = '.$this->ID);
+		return $pagetype::get()->filter('ParentID', $this->ID);
 	}
 		
 }
