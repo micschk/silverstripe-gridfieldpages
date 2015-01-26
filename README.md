@@ -3,12 +3,15 @@ Manage pages from a gridfield instead of the sitetree
 
 This module tackles the issue of a cluttered SiteTree by managing pages from a gridfield. It can easily handle thousands of subpages (production-tested with 65.000 pages under one parent).
 
+This module is meant as base classes, it can be used on its own but usually you will want to subclass in order to add filtering/sorting, etc. An example module subclassing this module is Newsgrid (filterable newsitems managed from a gridfield).
+
 
 ## Features
 
 * GridFieldPages extend SiteTree so no Page functionality is lost by using DataObjects.
 * Custom GridField components for quickly adding new pages.
-* Hides pages from the sitetree for v
+* Hides sub pages from the sitetree (via excludechildren).
+* Drag 'n drop sorting of pages (loop over $SortedChildren in templates).
 
 
 ## Requirements

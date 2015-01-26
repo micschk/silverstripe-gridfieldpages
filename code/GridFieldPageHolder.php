@@ -36,11 +36,13 @@ class GridFieldPageHolder extends Page {
 			));
 
 			// include both live and stage versions of pages
-			$pages = $this->AllChildrenIncludingDeleted();
+			//$pages = $this->AllChildrenIncludingDeleted();
 
 			// use gridfield as normal
-			$gridField = new GridField("Subpages", "Manage " . singleton($this->defaultChild())->i18n_plural_name(),
-				$pages, $gridFieldConfig);
+			$gridField = new GridField("Subpages", 
+					"Manage " . singleton($this->defaultChild())->i18n_plural_name(),
+					DataObject::get($this->defaultChild(), 'ParentID = '.$this->ID),
+					$gridFieldConfig);
 			
 			$gridField->setModelClass($this->defaultChild());
 			
@@ -50,6 +52,12 @@ class GridFieldPageHolder extends Page {
 		return $fields;
 	}
 	
+	
+	public function SortedChildren(){
+		$pagetype = $this->defaultChild();
+		return $pagetype::get()->filter('ParentID = '.$this->ID);
+	}
+		
 }
  
 class GridFieldPageHolder_Controller extends Page_Controller {
