@@ -23,6 +23,13 @@ class GridFieldPage extends Page {
 	 */
 	public function getStatus($cached = true) {
 		
+		// Special case where sortorder changed
+		$liveRecord = Versioned::get_by_stage(get_class($this), 'Live')->byID($this->ID);
+		//return $this->Sort . ' - ' . $liveRecord->Sort;
+		if($liveRecord->Sort && $liveRecord->Sort != $this->Sort){
+			return 'Draft modified (reordered)';
+		}
+		
 		if($this->IsDeletedFromStage) return 'Draft deleted';
 		if($this->IsAddedToStage) return 'Draft';
 		if($this->IsModifiedOnStage) return 'Draft modified';

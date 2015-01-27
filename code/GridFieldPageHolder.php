@@ -15,7 +15,7 @@ class GridFieldPageHolder extends Page {
 		$fields = parent::getCMSFields();
 		
 		// GridFieldPage
-		$fields->addFieldToTab('Root.Subpages', new HeaderField('GridfieldPages', 'Subpages of this page'));
+		//$fields->addFieldToTab('Root.Subpages', new HeaderField('GridfieldPages', 'Subpages of this page'));
 		
 		if( self::config()->get('add_default_gridfield') ){
 			$gridFieldConfig = GridFieldConfig::create()->addComponents(
@@ -25,9 +25,18 @@ class GridFieldPageHolder extends Page {
 				new GridFieldFilterHeader(),
 				$dataColumns = new GridFieldDataColumns(),
 				new GridFieldPaginator(20),
-				new GridFieldEditSiteTreeItemButton(),
-				new GridFieldOrderableRows() // default 'Sort' is equal to page sort field...
+				new GridFieldEditSiteTreeItemButton()
 			);
+			// Orderable is optional, as often pages may be sorted by other means
+			if( self::config()->get('apply_sortable_gridfield') ){
+				// OrderableRows will auto-deactivate when users Sort via SortableHeader
+				$gridFieldConfig->addComponent(new GridFieldOrderableRows());
+				$fields->addFieldToTab('Root.Subpages', new LiteralField('SortWarning', 
+						"<p class=\"message warning\" style=\"display: inline-block;\">" 
+						. _t("GridFieldPages.PUBLISHAFTERSORTWARNING", 
+						"After reordering, the new sort order will get active after one of the pages gets (re)published")
+						. "</p>"));
+			}
 			$dataColumns->setDisplayFields(array(
 				'Title' => 'Title',
 				'URLSegment'=> 'URL',
@@ -41,7 +50,8 @@ class GridFieldPageHolder extends Page {
 			// use gridfield as normal
 			$gridField = new GridField("Subpages", 
 					"Manage " . singleton($this->defaultChild())->i18n_plural_name(),
-					DataObject::get($this->defaultChild(), 'ParentID = '.$this->ID),
+					//DataObject::get($this->defaultChild(), 'ParentID = '.$this->ID),
+					SiteTree::get()->filter('ParentID', $this->ID),
 					$gridFieldConfig);
 			
 			$gridField->setModelClass($this->defaultChild());
@@ -56,9 +66,18 @@ class GridFieldPageHolder extends Page {
 	// we need some kind of warning/info to inform CMS users about this
 	public function SortedChildren(){
 		//return DataObject::get($this->defaultChild(), 'ParentID = '.$this->ID);
-		//return SiteTree::get()->filter('ParentID', $this->ID)->sort('Sort');
-		$pagetype = $this->defaultChild();
-		return $pagetype::get()->filter('ParentID', $this->ID);
+		return SiteTree::get()->filter('ParentID', $this->ID)->sort('Sort');
+		//$pagetype = $this->defaultChild();
+		//return $pagetype::get()->filter('ParentID', $this->ID);
+	}
+	
+	public function onBeforeGridFieldReorder($grid){
+//		$message = sprintf(
+//			'Published %s %s',
+//			$this->owner->record->i18n_singular_name(),
+//			$title
+//		);
+        //$grid->Form->sessionMessage('TESTMESSAGE', 'good');
 	}
 		
 }

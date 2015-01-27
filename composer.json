@@ -13,6 +13,9 @@
 		"micschk/silverstripe-excludechildren": "*",
 		"micschk/silverstripe-gridfieldsitetreebuttons": "*"
     },
+    "suggest": {
+        "silverstripe-australia/gridfieldextensions": "Adds drag & drop sorting support to gridfields"
+    },
 	"extra": {
 		"installer-name": "gridfieldpages"
 	}
