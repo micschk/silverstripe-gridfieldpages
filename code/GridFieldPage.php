@@ -23,56 +23,79 @@ class GridFieldPage extends Page {
 	 */
 	public function getStatus($cached = true) {
 		
-		// Special case where sortorder changed
-		$liveRecord = Versioned::get_by_stage(get_class($this), 'Live')->byID($this->ID);
-		//return $this->Sort . ' - ' . $liveRecord->Sort;
-		if($liveRecord->Sort && $liveRecord->Sort != $this->Sort){
-			return 'Draft modified (reordered)';
+		$status = null;
+		$statusflag = null;
+		
+		if($this->hasMethod("isPublished")) {
+			
+			$published = $this->isPublished();
+			
+			if($published) {
+				$status = _t(
+					"GridFieldPage.StatusPublished", 
+					'<i class="btn-icon btn-icon-accept"></i> Published on {date}', 
+					"State for when a post is published.", 
+					array(
+						"date" => $this->dbObject("LastEdited")->Nice()
+					)
+				);
+				//$status = 'Published';
+				
+				// Special case where sortorder changed
+				$liveRecord = Versioned::get_by_stage(get_class($this), 'Live')->byID($this->ID);
+				//return $this->Sort . ' - ' . $liveRecord->Sort;
+				if($liveRecord->Sort && $liveRecord->Sort != $this->Sort){
+					// override published status
+					$status = _t(
+							"GridFieldPage.StatusDraftReordered", 
+							'<i class="btn-icon btn-icon-arrow-circle-double"></i> Draft modified (reordered)',
+							"State for when a page has been reordered."
+						);
+					//$status = 'Draft modified (reordered)';
+				}
+				
+				// Special case where deleted from draft
+				if($this->IsDeletedFromStage) {
+					// override published status
+					$statusflag = "<span class='modified'>" 
+								. _t("GridFieldPage.StatusDraftDeleted", "draft deleted") . "</span>";
+					//$status = 'Draft deleted';
+				}
+				
+				// If modified on stage, add 
+				if($this->IsModifiedOnStage) {
+					// add to published status
+					$statusflag = "<span class='modified'>" 
+								. _t("GridFieldPage.StatusModified", "draft modified") . "</span>";
+					//$status = 'Draft modified';
+				}
+				
+				// If same on stage...
+				if($this->IsSameOnStage) {
+					// leave as is
+				}
+				
+			} else {
+				if($this->IsAddedToStage) {
+					$status = _t(
+							"GridFieldPage.StatusDraft", 
+							'<i class="btn-icon btn-icon-pencil"></i> Saved as Draft on {date}',
+							"State for when a post is saved but not published.", 
+							array(
+								"date" => $this->dbObject("LastEdited")->Nice()
+							)
+						);
+					//$status = 'Draft';
+				}
+				
+			}
+			
 		}
 		
-		if($this->IsDeletedFromStage) return 'Draft deleted';
-		if($this->IsAddedToStage) return 'Draft';
-		if($this->IsModifiedOnStage) return 'Draft modified';
-		if($this->IsSameOnStage) return 'Published';
-		// fallbacks
-		if($this->isPublished()) return 'Published';
-		return 'Draft';
+		// allow for extensions
+		$this->extend('updateStatus', $status, $statusflag);
 		
-//		$status = null;
-//		if($this->hasMethod("isPublished")) {
-//			
-//			$published = $this->isPublished();
-//			
-//			if(!$published) {
-//				$status = _t(
-//					"GridFieldPage.StatusDraft", 
-//					'<i class="btn-icon btn-icon-pencil"></i> Saved as Draft on {date}',
-//					"State for when a post is saved but not published.", 
-//					array(
-//						"date" => $this->dbObject("LastEdited")->Nice()
-//					)
-//				);
-//			} else {
-//				$status = _t(
-//					"GridFieldPage.StatusPublished", 
-//					'<i class="btn-icon btn-icon-accept"></i> Published on {date}', 
-//					"State for when a post is published.", 
-//					array(
-//						"date" => $this->dbObject("LastEdited")->Nice()
-//					)
-//				);
-//			}
-//			
-//			if($this->isModifiedOnStage && $published) {
-//				$status .= "<span class='modified'>" 
-//						. _t("GridFieldPage.StatusModified", "modified") . "</span>";
-//			} 
-//		}
-//		
-//		// allow for extensions
-//		$this->extend('updateStatus', $status);
-//		
-//		return DBField::create_field('HTMLVarchar', $status);
+		return DBField::create_field('HTMLVarchar', $status.$statusflag);
 		
 	}
 	

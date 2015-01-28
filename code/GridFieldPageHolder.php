@@ -43,7 +43,7 @@ class GridFieldPageHolder extends Page {
 				'getStatus' => 'Status',
 				'LastEdited' => 'Changed',
 			));
-
+			
 			// include both live and stage versions of pages
 			//$pages = $this->AllChildrenIncludingDeleted();
 
