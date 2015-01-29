@@ -10,8 +10,8 @@
     "require": {
         "silverstripe/framework": "~3.0",
 		"silverstripe/cms": "~3.0",
-		"micschk/silverstripe-excludechildren": "*",
-		"micschk/silverstripe-gridfieldsitetreebuttons": "*"
+		"micschk/silverstripe-excludechildren": "dev-master",
+		"micschk/silverstripe-gridfieldsitetreebuttons": "dev-master"
     },
     "suggest": {
         "silverstripe-australia/gridfieldextensions": "Adds drag & drop sorting support to gridfields"
