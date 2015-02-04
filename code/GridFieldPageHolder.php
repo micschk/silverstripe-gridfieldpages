@@ -79,6 +79,10 @@ class GridFieldPageHolder extends Page {
 //		);
         //$grid->Form->sessionMessage('TESTMESSAGE', 'good');
 	}
+	
+	public function MostRecent($amount = 3){
+		return BlogGridPage::get()->filter('ParentID', $this->ID)->sort('Date DESC')->limit($amount);
+	}
 		
 }
  
