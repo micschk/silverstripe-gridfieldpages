@@ -8,6 +8,14 @@ class GridFieldPage extends Page {
 	   'ShowInMenus' => false,
 	);
 	
+	private static $searchable_fields = array(
+		'Title', 'MenuTitle'
+	);
+	
+	private static $summary_fields = array(
+		"Title", 'MenuTitle'
+	);
+	
 	/**
 	 * add an arrow-overlay to this page's icon when open in the CMS
 	 */
@@ -97,6 +105,20 @@ class GridFieldPage extends Page {
 		
 		return DBField::create_field('HTMLVarchar', $status.$statusflag);
 		
+	}
+	
+	public function getCMSActions() {
+		
+		// hide delete-draft button if page is published 
+		// (deleting from draft while having a published page, 
+		// removes the page from the gridfield and makes it un-reachable from the CMS
+		// The Gridfield gets records from draft only (AllChildrenIncludingDeleted breaks 
+		// gridfield sorting & filtering)
+		if ($this->isPublished()) {
+			$actions = parent::getCMSActions();
+			$actions->removeByName('action_delete');
+		}
+		return $actions;
 	}
 	
 }

@@ -64,25 +64,25 @@ class GridFieldPageHolder extends Page {
 	
 	// @TODO: A page still needs to be published for the sortorder to be updated, 
 	// we need some kind of warning/info to inform CMS users about this
-	public function SortedChildren(){
-		//return DataObject::get($this->defaultChild(), 'ParentID = '.$this->ID);
-		return SiteTree::get()->filter('ParentID', $this->ID)->sort('Sort');
-		//$pagetype = $this->defaultChild();
-		//return $pagetype::get()->filter('ParentID', $this->ID);
-	}
+//	public function SortedChildren(){
+//		//return DataObject::get($this->defaultChild(), 'ParentID = '.$this->ID);
+//		return SiteTree::get()->filter('ParentID', $this->ID)->sort('Sort');
+//		//$pagetype = $this->defaultChild();
+//		//return $pagetype::get()->filter('ParentID', $this->ID);
+//	}
 	
-	public function onBeforeGridFieldReorder($grid){
-//		$message = sprintf(
-//			'Published %s %s',
-//			$this->owner->record->i18n_singular_name(),
-//			$title
-//		);
-        //$grid->Form->sessionMessage('TESTMESSAGE', 'good');
-	}
+//	public function onBeforeGridFieldReorder($grid){
+////		$message = sprintf(
+////			'Published %s %s',
+////			$this->owner->record->i18n_singular_name(),
+////			$title
+////		);
+//        //$grid->Form->sessionMessage('TESTMESSAGE', 'good');
+//	}
 	
-	public function MostRecent($amount = 3){
-		return BlogGridPage::get()->filter('ParentID', $this->ID)->sort('Date DESC')->limit($amount);
-	}
+//	public function MostRecent($amount = 3){
+//		return BlogGridPage::get()->filter('ParentID', $this->ID)->sort('Date DESC')->limit($amount);
+//	}
 		
 }
  
