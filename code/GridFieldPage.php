@@ -114,8 +114,8 @@ class GridFieldPage extends Page {
 		// removes the page from the gridfield and makes it un-reachable from the CMS
 		// The Gridfield gets records from draft only (AllChildrenIncludingDeleted breaks 
 		// gridfield sorting & filtering)
+		$actions = parent::getCMSActions();
 		if ($this->isPublished()) {
-			$actions = parent::getCMSActions();
 			$actions->removeByName('action_delete');
 		}
 		return $actions;
