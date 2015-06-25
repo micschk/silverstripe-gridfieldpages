@@ -4,7 +4,11 @@ class GridFieldPageHolder extends Page {
 
     private static $allowed_children = array('*GridFieldPage');
 	private static $default_child = "GridFieldPage";
+	
 	private static $add_default_gridfield = true;
+	private static $apply_sortable = true;
+	private static $subpage_tab = "Root.Subpages";
+	private static $gridfield_title = "Manage Subpages";
 	
 	public static function setAddDefaultGridField(Boolean $val){
 		Deprecation::notice('1.0', 'setAddDefaultGridField is deprecated please use Config instead');
@@ -14,10 +18,10 @@ class GridFieldPageHolder extends Page {
 	public function getCMSFields() {
 		$fields = parent::getCMSFields();
 		
-		// GridFieldPage
-		//$fields->addFieldToTab('Root.Subpages', new HeaderField('GridfieldPages', 'Subpages of this page'));
+		$PageTab = Config::inst()->get($this->owner->className, 'subpage_tab');
 		
-		if( self::config()->get('add_default_gridfield') ){
+		// GridFieldPage
+		if( Config::inst()->get($this->owner->className, 'add_default_gridfield') ){
 			$gridFieldConfig = GridFieldConfig::create()->addComponents(
 				new GridFieldToolbarHeader(),
 				new GridFieldAddNewSiteTreeItemButton('toolbar-header-right'),
@@ -28,35 +32,34 @@ class GridFieldPageHolder extends Page {
 				new GridFieldEditSiteTreeItemButton()
 			);
 			// Orderable is optional, as often pages may be sorted by other means
-			if( self::config()->get('apply_sortable_gridfield') ){
+			if( Config::inst()->get($this->owner->className, 'apply_sortable') ){
 				// OrderableRows will auto-deactivate when users Sort via SortableHeader
 				$gridFieldConfig->addComponent(new GridFieldOrderableRows());
-				$fields->addFieldToTab('Root.Subpages', new LiteralField('SortWarning', 
+				$fields->addFieldToTab($PageTab, new LiteralField('SortWarning', 
 						"<p class=\"message warning\" style=\"display: inline-block;\">" 
 						. _t("GridFieldPages.PUBLISHAFTERSORTWARNING", 
-						"After reordering, the new sort order will get active after one of the pages gets (re)published")
+					"After reordering, the new sort order will get active after one of the pages gets (re)published")
 						. "</p>"));
 			}
 			$dataColumns->setDisplayFields(array(
 				'Title' => 'Title',
 				'URLSegment'=> 'URL',
 				'getStatus' => 'Status',
-				'LastEdited' => 'Changed',
+				//'LastEdited' => 'Changed',
 			));
 			
 			// include both live and stage versions of pages
-			//$pages = $this->AllChildrenIncludingDeleted();
-
 			// use gridfield as normal
 			$gridField = new GridField("Subpages", 
-					"Manage " . singleton($this->defaultChild())->i18n_plural_name(),
+					Config::inst()->get($this->owner->className, 'gridfield_title'),
 					//DataObject::get($this->defaultChild(), 'ParentID = '.$this->ID),
-					SiteTree::get()->filter('ParentID', $this->ID),
+					//SiteTree::get()->filter('ParentID', $this->ID),
+					$this->AllChildrenIncludingDeleted(),
 					$gridFieldConfig);
 			
-			$gridField->setModelClass($this->defaultChild());
+			//$gridField->setModelClass($this->defaultChild());
 			
-			$fields->addFieldToTab("Root.Subpages", $gridField);
+			$fields->addFieldToTab($PageTab, $gridField);
 		}
 		
 		return $fields;
