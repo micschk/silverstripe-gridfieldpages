@@ -57,7 +57,7 @@ class GridFieldPageHolder extends Page {
 					$this->AllChildrenIncludingDeleted(),
 					$gridFieldConfig);
 			
-			//$gridField->setModelClass($this->defaultChild());
+			$gridField->setModelClass($this->defaultChild());
 			
 			$fields->addFieldToTab($PageTab, $gridField);
 		}
