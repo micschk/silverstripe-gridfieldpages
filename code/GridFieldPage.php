@@ -1,4 +1,5 @@
 <?php
+
 require_once(__DIR__ . '/GridFieldPageTrait.php');
 
 /**
@@ -30,5 +31,6 @@ class GridFieldPage extends Page {
 
 }
  
-class GridFieldPage_Controller extends Page_Controller {
+class GridFieldPage_Controller extends Page_Controller
+{
 }
