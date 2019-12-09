@@ -18,9 +18,7 @@ This module is meant as base classes, it can be used on its own but usually you 
 
 *These will get auto-installed when using composer:*
 
-* SilverStripe 3.0 or newer
-* PHP 5.4 or newer
-* [silverstripe-excludechildren module to hide pages from the sitetree](https://github.com/micschk/silverstripe-excludechildren)
+* SilverStripe CMS 4.0 or newer (3.x see 1.x tags)
 * [silverstripe-gridfieldsitetreebuttons to manage SiteTree items in a gridfield](https://github.com/micschk/silverstripe-gridfieldsitetreebuttons)
 
 *Optional, for drag & drop sorting (suggested, not auto-installed by composer):*
