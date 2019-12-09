@@ -1,3 +1,8 @@
+// quick tweak: move the notifications down a bit so they dont overlap the tab interface
+.notice-wrap {
+	margin-top: 40px;
+}
+
 // legacy: through class inheritance
 span.gridfieldpage-overlay + .item:before,
 // if applied as extension, we add a status badge (which also gets as extra class on the li.jstree-leaf

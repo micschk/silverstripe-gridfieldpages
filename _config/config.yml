@@ -5,15 +5,15 @@ SilverStripe\Admin\LeftAndMain:
   extra_requirements_css:
     - 'micschk/silverstripe-gridfieldpages:client/css/gridfieldpages.css'
 
-Restruct\Silverstripe\GridFieldPages\GridFieldPageHolder:
-  hide_from_cms_tree:
-    - Restruct\Silverstripe\GridFieldPages\GridFieldPage
-  extensions:
-    - Restruct\Silverstripe\GridFieldPages\GridFieldPageHolderExtension
+#Restruct\Silverstripe\GridFieldPages\GridFieldPageHolder:
+#  hide_from_cms_tree:
+#    - Restruct\Silverstripe\GridFieldPages\GridFieldPage
+#  extensions:
+#    - Restruct\Silverstripe\GridFieldPages\GridFieldPageHolderExtension
 #  add_default_gridfield: true
 #  allowed_children:
 #    - Restruct\Silverstripe\GridFieldPages\GridFieldPage
 
-Restruct\Silverstripe\GridFieldPages\GridFieldPage:
-  extensions:
-    - Restruct\Silverstripe\GridFieldPages\GridFieldPageExtension
+#Restruct\Silverstripe\GridFieldPages\GridFieldPage:
+#  extensions:
+#    - Restruct\Silverstripe\GridFieldPages\GridFieldPageExtension

@@ -52,7 +52,7 @@ extends DataExtension
         }
     }
 
-    public function addPagesGridField(&$fields, $tab='Root.Subpages', $gfTitle='Manage Subpages', $orderable=true)
+    public function addPagesGridField(&$fields, $tab='Root.Subpages', $gfTitle='Manage Subpages', $orderable=null)
     {
         $gridFieldConfig = GridFieldConfig::create()
             ->addComponents(
@@ -68,6 +68,7 @@ extends DataExtension
             );
 
         // Orderable is optional, as often pages may be sorted by other means
+        if($orderable===null) $orderable = $this->owner->config()->apply_sortable;
         if ($orderable) {
             $gridFieldConfig->addComponent(new GridFieldOrderablePages());
         }

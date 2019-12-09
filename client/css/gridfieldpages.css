@@ -1,3 +1,6 @@
+.notice-wrap {
+  margin-top: 40px; }
+
 span.gridfieldpage-overlay + .item:before,
 li.jstree-leaf.status-gfpage-extension span.jstree-pageicon + .item:before {
   content: '';
