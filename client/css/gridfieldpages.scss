@@ -1,0 +1,76 @@
+// legacy: through class inheritance
+span.gridfieldpage-overlay + .item:before,
+// if applied as extension, we add a status badge (which also gets as extra class on the li.jstree-leaf
+li.jstree-leaf.status-gfpage-extension span.jstree-pageicon + .item:before {
+	content: '';
+	background-image: url('../imgs/icon-overlay.svg');
+	background-size: contain;
+	background-repeat: no-repeat;
+	width: 14px;
+	height: 14px;
+	position: absolute;
+	margin-left: -17px;
+	margin-top: 2px
+}
+// hide badge ('lozenge') just to be sure (it's empty anyway)...
+.badge.status-gfpage-extension {
+	display: none;
+}
+
+// Styling gridfield like CMS tree...
+.col-TreeTitleAsHtml, .col-getTreeTitleAsHtml {
+
+	.item {
+		//color: #0071c4;
+	}
+
+	.page-icon {
+		display: inline-block;
+		vertical-align: text-bottom;
+		margin-right: .25rem;
+		position: relative;
+	}
+
+	span.badge {
+		padding: 7px 5px 6px 5px;
+		background-color: #dbe0e9;
+		color: #43536d;
+		margin-left: .25rem;
+	}
+
+	// duplicated & adapted from: vendor/silverstripe/admin/client/src/styles/legacy/_tree.scss
+	@mixin tree-status-icon($label, $dotColor, $textColor, $bgColor) {
+		// dots
+		.status-#{$label} > .page-icon:after {
+			content:"";
+			display: block;
+			width: 8px;
+			height: 8px;
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			background: #fce2d0;
+			border: 1px solid #fff;
+			border-radius: 100px;
+		}
+		// badges/labels
+		span.badge.status-#{$label}  {
+			background-color:$bgColor;
+			border-color:$textColor;
+			color: $textColor;
+		}
+		// dot-colors
+		.status-#{$label} > .page-icon:after  {
+			background-color:$dotColor;
+			box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3), inset 0 0 0 1px $textColor;
+		}
+	}
+	$draft-color: #cf3f00;
+	@include tree-status-icon('addedtodraft', #ff7f22, $draft-color, #fff7f2);
+	@include tree-status-icon('modified', #fff2e8, $draft-color, #fff7f2);
+	@include tree-status-icon('archived', #5F7688, #455b6c, #f7f7f7);
+	@include tree-status-icon('deletedonlive', #f7f7f7, #455b6c, #f7f7f7);
+	@include tree-status-icon('removedfromdraft', #f7f7f7, #455b6c, #f7f7f7);
+	@include tree-status-icon('workflow-approval', #0070B4, #0070B4, #E8FAFF);
+}
+

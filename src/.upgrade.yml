@@ -1,0 +1,7 @@
+mappings:
+  GridFieldPageTrait: Restruct\Silverstripe\GridFieldPages\GridFieldPageTrait
+  GridFieldPage: Restruct\Silverstripe\GridFieldPages\GridFieldPage
+  GridFieldPage_Controller: Restruct\Silverstripe\GridFieldPages\GridFieldPage_Controller
+  GridFieldPageExtension: Restruct\Silverstripe\GridFieldPages\GridFieldPageExtension
+  GridFieldPageHolder: Restruct\Silverstripe\GridFieldPages\GridFieldPageHolder
+  GridFieldPageHolder_Controller: Restruct\Silverstripe\GridFieldPages\GridFieldPageHolder_Controller

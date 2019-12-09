@@ -1,24 +1,23 @@
 {
     "name": "micschk/silverstripe-gridfieldpages",
     "description": "Base Page & Holder classes for managing SiteTree items in a Gridfield instead of via SiteTree",
-    "type": "silverstripe-module",
-    "keywords": ["silverstripe", "excludechildren", "sitetree", "gridfield"],
+    "type": "silverstripe-vendormodule",
+    "keywords": ["silverstripe", "sitetree", "gridfield"],
     "authors": [
     {
         "name": "micschk"
     }],
     "require": {
-		"php": ">=5.4.0,<7",
-        "silverstripe/framework": "~3.0",
-		"silverstripe/cms": "~3.0",
-		"micschk/silverstripe-excludechildren": "*",
-		"micschk/silverstripe-gridfieldsitetreebuttons": "*"
+        "silverstripe/vendor-plugin": "^1",
+        "silverstripe/cms": "^4",
+		"micschk/silverstripe-gridfieldsitetreebuttons": "^2"
+    },
+    "extra": {
+        "expose": [
+            "client"
+        ]
     },
     "suggest": {
-        "silverstripe-australia/gridfieldextensions": "Adds drag & drop sorting support to gridfields"
-    },
-	"extra": {
-		"installer-name": "gridfieldpages"
-	}
-    
+        "symbiote/silverstripe-gridfieldextensions": "Adds drag & drop sorting support to gridfields"
+    }
 }
